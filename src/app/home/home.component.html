@@ -1,3 +1,168 @@
-<p>
-  home works!
-</p>
+<div class="container mt-6">
+  <div class="row">
+
+    <div class="col-lg-12">
+      <div class="card border-light mb-3">
+        <div class="card-header">สถิติจังหวัด ประเทศไทย </div>
+        <div class="card-body">
+
+
+          <div class="bs-component">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#frequency">Descriptive</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#correlation">correlation</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#regression">regression</a>
+              </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+
+              <div class="tab-pane fade show active" id="frequency">
+                <!-- frequency<br /> -->
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="form-group">
+                          <label>เลือกข้อมูล</label>
+                          <select class="form-control" [(ngModel)]="header_ls" (ngModelChange)="selectHeader($event)">
+                            <option *ngFor="let h of headers" [(ngValue)]="h">{{h.data}}</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group" scroll-div>
+                          <select multiple="multiple" size="11" class="form-control" [(ngModel)]="listField_ls"
+                            (ngModelChange)="selectedData($event)">
+                            <option *ngFor="let f of listField; let i = index" [(ngValue)]="f">{{i+1}}: {{f.descb}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-8" id="container">
+                        <p class="box">{{selectedHeader}}</p>
+                        <div id="chart"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-4">
+                    <label>เลือกจังหวัด</label>
+                    <select multiple="multiple" size="11" class="form-control" [(ngModel)]="prov_ls" (ngModelChange)="selectedProvince($event)">
+                      <option *ngFor="let prov of provs" [(ngValue)]="prov">{{prov.prov_name}}</option>
+                    </select>
+                    <br />
+                    <!-- <label>เลือกปี</label>
+                    <select class="form-control" [(ngModel)]="years_ls" (ngModelChange)="selectedYear($event)">
+                      <option *ngFor="let y of years" [(ngValue)]="y">{{y.year}}</option>
+                    </select> -->
+                  </div>
+
+                  <div class="col-8 hchart" id="container" *ngIf="provShow">
+                    <div *ngFor="let p of prov_sel">
+                      <p class="box">{{selectedHeaderProv}}</p>
+                      <p class="box">{{p.prov_name}}</p>
+                      <div [attr.id]="'p' + p.prov_code"></div>
+                      <hr>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="correlation">
+                correlation<br />
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label>เลือกข้อมูล</label>
+                      <select class="form-control" [(ngModel)]="headerCorre" (ngModelChange)="selectHeaderCorre($event)">
+                        <option *ngFor="let h of headers" [(ngValue)]="h">{{h.data}}</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group" scroll-div>
+                      <select class="form-control" [(ngModel)]="listCorr_ls" (ngModelChange)="selectDataCorr($event)">
+                        <option *ngFor="let f of listCorre; let i = index" [(ngValue)]="f">{{i+1}}: {{f.descb}}</option>
+                      </select>
+                    </div>
+                    <label>เลือกปี</label>
+                    <select class="form-control" [(ngModel)]="years_ls" (ngModelChange)="selectedYear($event)">
+                      <option *ngFor="let y of years" [(ngValue)]="y">{{y.year}}</option>
+                    </select>
+                    <br />
+                    <button class="btn btn-primary" (click)="addParam()"><i class="fa fa-plus-circle"></i>&nbsp;เพิ่มข้อมูล</button>&nbsp;
+                    <button class="btn btn-danger" (click)="clearCorr()"><i class="fa fa-times-circle"></i>&nbsp;ลบข้อมูลที่เลือก</button>
+                    <div class="form-group">
+                      <label for="exampleTextarea">Example textarea</label>
+                      <ul>
+                        <li *ngFor="let l of lstCorr_sel; let i = index">
+                          {{ l.descb }} {{'ปี: '+ l.year }}
+                        </li>
+                      </ul>
+                    </div>
+                    <br />
+                    <button class="btn btn-primary" (click)="calCorrelation()"><i class="fa fa-bar-chart"></i>&nbsp;แสดงผลการวิเคราะห์</button>
+                  </div>
+                  <div class="col-6">
+
+                    <div id="scatter"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="regression">
+                regression<br />
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect2">Example multiple select</label>
+                      <select class="form-control" id="exampleFormControlSelect2">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect2">Example multiple select</label>
+                      <select class="form-control" id="exampleFormControlSelect2">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-light mb-3">
+        <div class="card-header">สถิติจังหวัด ประเทศไทย </div>
+        <div class="card-map">
+          <div id="map"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div> // container

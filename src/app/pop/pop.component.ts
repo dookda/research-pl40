@@ -205,12 +205,14 @@ export class PopComponent implements OnInit {
       // const data = res['data'].map((r: any) => Number(r));
       // const d = res.data.map(r => Number(r.m0_4));
       const data = res.data;
-      const keys = Object.keys(data[0]);
-      const val = Object.values(data[0]);
+      // const keys = Object.keys(data[0]);
+      // const val = Object.values(data[0]);
 
       // console.log(keys, val);
       const m = Object.values(data[0]).slice(1, 22).map((x: number) => Number(x));
       const f = Object.values(data[0]).slice(22, 43).map((x: number) => x * -1);
+
+      // console.log(m, f);
 
       const categories = [
         '0-4', '5-9', '10-14', '15-19',
