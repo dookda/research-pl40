@@ -1,256 +1,109 @@
+import { async } from '@angular/core/testing';
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
 import * as L from 'leaflet';
 import * as Highcharts from 'highcharts';
-import { DataService } from '../data.service';
-import * as ss from 'simple-statistics';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public map: any;
-  public center: any;
-  public zoom: any;
+
+  public tables: any;
+  public tb: any;
+  public tbName = '';
+  public fields: any;
+  public fld: any;
+  public fldName = '';
+  public data: any;
+  public dat: any;
+  public year1: any;
+  public yr1: any;
+
+  public year2: any;
+  public yr2: any;
 
   public grod: any;
-  public gter: any;
   public ghyb: any;
-  public mbox: any;
-
-  public tam: any;
-  public amp: any;
+  public gter: any;
   public pro: any;
 
-  public headers: any;
-  public header_ls: any;
-  public selectedHeader: any;
-  public selectedHeaderProv: any;
-  public listField_ls: any;
-  public listField: any;
-
-  public provs: any;
-  public prov_ls: any;
-  public provShow = false;
-  public years: any;
-  public years_ls: any;
-  public header_sel: any;
-  public prov_sel: any;
-  public data_sel: any;
-
-  public col_code: any;
-  public col_desc: any;
-
-  public tb_sel: any;
-  public series = [];
-  public categories = [];
-
-
-  // correlation
-  public headerCorre: any;
-  public listCorr_ls: any;
-  public listCorre: any;
-  public tbCorr_sel: any;
-  public year_sel: any;
-  public colCorr_sel: any;
-  public lstCorr_sel = [];
-  public arrCorr_sel = [];
-
+  public map1: any;
+  public map2: any;
+  public mapOtp: any;
 
   constructor(
-    public dataService: DataService,
-
+    public dataService: DataService
   ) { }
 
-  ngOnInit() {
-    this.center = [13.0, 101.1];
-    this.zoom = 6;
-    this.loadmap();
-
-    this.loadHeader();
-
-
+  async ngOnInit() {
+    this.listTable();
+    this.mapOtp = {
+      center: [13.0, 101.1],
+      zoom: 5
+    };
+    this.loadMap1();
+    this.loadMap2();
   }
 
-  loadmap() {
-    this.map = L.map('map', {
-      center: this.center,
-      zoom: this.zoom
+  listTable() {
+    this.dataService.listTable().then((res: any) => {
+      this.tables = res.data;
     });
-
-    // base map
-    this.mbox = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-      attribution: 'Map data &copy;',
-      maxZoom: 18,
-      id: 'mapbox.streets',
-      accessToken: 'pk.eyJ1IjoiY3NrZWxseSIsImEiOiJjamV1NTd1eXIwMTh2MzN1bDBhN3AyamxoIn0.Z2euk6_og32zgG6nQrbFLw'
-    });
-
-    this.grod = L.tileLayer('http://{s}.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-      maxZoom: 18,
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-    });
-    this.ghyb = L.tileLayer('http://{s}.google.com/vt/lyrs=y,m&x={x}&y={y}&z={z}', {
-      maxZoom: 18,
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-    });
-    this.gter = L.tileLayer('http://{s}.google.com/vt/lyrs=t,m&x={x}&y={y}&z={z}', {
-      maxZoom: 18,
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-    });
-
-    // overlay map
-    const mapUrl = 'http://map.nu.ac.th/geoserver-hgis/ows?';
-    const cgiUrl = 'http://www.cgi.uru.ac.th/geoserver/ows?';
-    const w3Url = 'http://www3.cgistln.nu.ac.th/geoserver/gistdata/ows?';
-
-    const rainInterp = L.tileLayer.wms(w3Url, {
-      layers: 'gistdata:geotiff_coverage',
-      format: 'image/png',
-      transparent: true,
-      zIndex: 1
-    });
-
-    this.pro = L.tileLayer.wms(cgiUrl, {
-      layers: 'th:province_4326',
-      format: 'image/png',
-      transparent: true,
-      zIndex: 5,
-      // CQL_FILTER: 'prov_code=65'
-    });
-
-    this.amp = L.tileLayer.wms(cgiUrl, {
-      layers: '	th:amphoe_4326',
-      format: 'image/png',
-      transparent: true,
-      zIndex: 5,
-      // CQL_FILTER: 'prov_code=65'
-    });
-
-    this.tam = L.tileLayer.wms(cgiUrl, {
-      layers: 'th:tambon_4326',
-      format: 'image/png',
-      transparent: true,
-      zIndex: 5,
-      // CQL_FILTER: 'prov_code=65'
-    });
-
-    const baseLayers = {
-      'map box': this.mbox,
-      'แผนที่ถนน': this.grod.addTo(this.map),
-      'แผนที่ภาพดาวเทียม': this.ghyb,
-      'แผนที่ภูมิประเทศ': this.gter,
-    };
-
-    const overlayLayers = {
-      'ปริมาณน้ำฝน': rainInterp.addTo(this.map),
-      'ขอบเขตตำบล': this.tam.addTo(this.map),
-      'ขอบเขตอำเภอ': this.amp.addTo(this.map),
-      'ขอบเขตจังหวัด': this.pro.addTo(this.map)
-    };
-
-    L.control.layers(baseLayers, overlayLayers).addTo(this.map);
-    // this.proCheck = true;
-    // this.ampCheck = true;
-    // this.tamCheck = true;
   }
 
-  // show th data
-  async getParameter() {
-    let cql_col = '';
-    this.col_code = '';
-    this.categories = [];
-    this.series = [];
-    this.col_desc = [];
-    this.data_sel.forEach((e: any, i: number) => {
-      cql_col += this.createCQL(i, e.code);
-      this.col_code += this.createCol(e.code);
-      this.col_desc.push(e.descb);
+  listField(e: any) {
+    this.dataService.listField(this.tb.table).then((res: any) => {
+      this.tbName = this.tb.data;
+      this.fields = res.data;
     });
-    this.dataService.getSelectedData(this.tb_sel.table, cql_col).then((res: any) => {
+  }
+
+  listYear() {
+    this.dataService.listYear(this.tb.table).then((res: any) => {
+      this.year1 = res.data;
+      this.year2 = res.data;
+    });
+  }
+
+  selectData(e: any) {
+    const fld = e.code;
+    this.fldName = e.descb;
+    this.dataService.selectData(this.tb.table, fld).then((res: any) => {
+      let datArr = [];
+      const cname = e.descb;
       const dat = res.data;
-      this.col_desc.forEach((c: any, i: number) => {
-        this.series.push({ name: String(c), data: this.createArr(dat, i) });
-      });
-      this.categories = this.createCat(dat);
-      this.getChart(this.categories, this.series);
+      datArr = this.numArr(dat, 1);
+      const series = [{
+        name: cname,
+        data: datArr
+      }];
+      const category = this.txtArr(dat, 0);
+      this.getChart(category, series, cname);
+      this.listYear();
     });
   }
 
-  // show province data
-  async selectedProvince(e: any) {
-    this.provShow = true;
-    this.prov_sel = e;
-    const tb = this.tb_sel.table;
-    const pros = this.obj2ArrTxt(this.prov_sel, 0);
-    const cols = this.obj2ArrSum(this.data_sel, 1);
-    const desc = this.obj2ArrTxt(this.data_sel, 2);
-    pros.forEach((p: any) => {
-      // console.log(col, cols);
-      this.loadDat(tb, desc, cols, p);
+  async selectByYear(yr: any, mapId: any, chartId: any) {
+    await this.dataService.selectGeomByYear(this.tb.table, this.fld.code, yr.year).then((res: any) => {
+      this.loadJsonToMap(res.data[0].geojson, mapId);
+    });
+    await this.dataService.selectDataByYear(this.tb.table, this.fld.code, yr.year).then((res: any) => {
+      let datArr = [];
+      datArr = this.numArr(res.data, 1);
+      const series = [{
+        showInLegend: false,
+        name: this.fld.descb,
+        data: datArr
+      }];
+      const category = this.txtArr(res.data, 0);
+      this.getProChart(category, series, this.fld.descb, chartId);
     });
   }
 
-  async loadDat(tb: any, descArr: any, colArr: any, pro: any) {
-    const series = [];
-    let categories = [];
-
-    await this.dataService.getSelectedSubData(tb, colArr, pro).then((res: any) => {
-      // api order [0]year, [1]pro_code
-      colArr.forEach((c: any, i: number) => {
-        series.push({ name: descArr[i], data: this.obj2ArrNum(res.data, i + 2) });
-      });
-      categories = this.obj2ArrTxt(res.data, 0);
-    });
-    this.createChart('p' + pro, categories, series);
-  }
-
-  // facility function
-  loadHeader() {
-    this.headers = this.dataService.getDataHeader();
-  }
-
-  selectHeader(e: any) {
-    this.provShow = false;
-    this.selectedHeader = `ค่าเฉลี่ยระดับประเทศ: ${e.data} ${e.desc}`;
-    this.selectedHeaderProv = `ค่าเฉลี่ยระดับจังหวัด: ${e.data} ${e.desc}`;
-    this.tb_sel = e;
-    this.loadSelectedTable(e.table);
-  }
-
-  loadSelectedTable(tb: string) {
-    this.dataService.getFieldFromSelectedTable(tb).then((res: any) => {
-      this.listField = res.data;
-    });
-  }
-
-  selectedData(e: any) {
-    this.data_sel = e;
-    this.getParameter();
-
-    this.provShow = false;
-    this.initProv();
-  }
-
-  loadYear(tb: string) {
-    this.year_sel = '';
-    this.dataService.getDataYear(tb).then((res: any) => {
-      this.years = res.data;
-    }, (error: any) => {
-      console.log(error);
-    });
-  }
-
-  initProv() {
-    this.dataService.getAllPro().then((res: any) => {
-      this.provs = res.data;
-    }, (error) => {
-      console.log(error);
-    });
-  }
-
-  obj2ArrNum(dat: any, i: number) {
+  numArr(dat: any, i: number) {
     const v = [];
     dat.forEach((d: any) => {
       v.push(Number(Object.values(d)[i]));
@@ -258,139 +111,229 @@ export class HomeComponent implements OnInit {
     return v;
   }
 
-  obj2ArrSum(dat: any, i: number) {
+  txtArr(dat: any, i: number) {
     const v = [];
     dat.forEach((d: any) => {
-      v.push('SUM(' + Object.values(d)[i] + ') as ' + Object.values(d)[i]);
+      v.push(String(Object.values(d)[i]));
     });
     return v;
   }
 
+  async loadJsonToMap(json: any, mapId: any) {
+    let geojson: any;
 
-  obj2ArrTxt(dat: any, i: number) {
-    const v = [];
-    dat.forEach((d: any) => {
-      v.push(Object.values(d)[i]);
+    const getColor = ((d: any) => {
+      return d > 1000 ? '#800026' :
+        d > 500 ? '#BD0026' :
+          d > 200 ? '#E31A1C' :
+            d > 100 ? '#FC4E2A' :
+              d > 50 ? '#FD8D3C' :
+                d > 20 ? '#FEB24C' :
+                  d > 10 ? '#FED976' :
+                    '#FFEDA0';
     });
-    return v;
-  }
 
-  obj2ArrMate(dat: any, i: number) {
-    const v = [];
-    dat.forEach((d: any) => {
-      v.push(Object.values(d)[i]);
+    let style = ((feature: any) => {
+      return {
+        fillColor: getColor(feature.properties.f2),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+      };
     });
-    return v;
-  }
 
-  createArr(dat: any, i: number) {
-    const v = [];
-    dat.forEach((d: any) => {
-      const da = [];
-      da.push(Object.values(d).map((x: any) => Number(x)));
-      v.push(da[0][i + 1]);
-    });
-    return v;
-  }
-
-  createCat(dat: any) {
-    const v = [];
-    dat.forEach((d: any) => {
-      const da = [];
-      da.push(Object.values(d).map((x: any) => x));
-      v.push(da[0][0]);
-    });
-    return v;
-  }
-
-  createCQL(i: number, item: any) {
-    let a = '';
-    a = (i > 0) ? ', ' : '';
-    return a + 'SUM(' + item + ') as ' + item;
-  }
-
-  createCol(item: any) {
-    return item;
-  }
-
-  // correlation
-  selectHeaderCorre(e: any, corre: string) {
-    this.tbCorr_sel = e;
-    this.dataService.getFieldFromSelectedTable(e.table).then((res: any) => {
-      this.listCorre = res.data;
-    });
-    this.loadYear(e.table);
-  }
-
-  selectDataCorr(e: any) {
-    this.colCorr_sel = e;
-  }
-
-  selectedYear(e: any) {
-    this.year_sel = e;
-  }
-
-  async addParam() {
-    if (this.colCorr_sel.length < 1) {
-      console.log('this.colCorr_sel is emty');
-    } else if (this.year_sel === '') {
-      console.log('this.year_sel is emty');
-    } else {
-      this.colCorr_sel.year = this.year_sel.year;
-      this.colCorr_sel.tb = this.tbCorr_sel.table;
-      console.log(this.colCorr_sel);
-      this.lstCorr_sel.push(this.colCorr_sel);
-      const col = 'SUM(' + this.colCorr_sel.code + ') as ' + this.colCorr_sel.code;
-      await this.dataService.getDataCorr(this.colCorr_sel.tb, col, this.colCorr_sel.year).then((res: any) => {
-        const corrCateg = this.obj2ArrNum(res.data, 0);
-        const corrSeries = this.obj2ArrNum(res.data, 1);
-        this.arrCorr_sel.push(corrSeries);
+    // info
+    function highlightFeature(e: any) {
+      var layer = e.target;
+      layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
       });
-    }
-  }
+      info.update(layer.feature.properties);
 
-  calCorrelation() {
-    // console.log(this.arrCorr_sel.length);
-
-    const s1 = this.arrCorr_sel[0];
-    const s2 = this.arrCorr_sel[1];
-    const s3 = [];
-    if (this.arrCorr_sel.length > 1) {
-      // console.log('s1:' + s1, ' s2: ' + s2);
-      const a = [];
-      const b = [];
-
-      if (s1.length === s2.length) {
-        s1.forEach((s: any, i: number) => {
-          a.push([s1[i], s2[i]]);
-        });
-        console.log(a);
-        const da = ss.sampleCorrelation(this.arrCorr_sel[0], this.arrCorr_sel[1]).toFixed(2);
-        this.createScatter(a);
-      } else {
-        console.log('not equal lengths');
+      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
       }
+    }
 
-    } else {
-      console.log('select aonther one');
+    function resetHighlight(e: any) {
+      geojson.resetStyle(e.target);
+      info.update();
+    }
+
+    const onEachFeature = ((feature: any, layer: any) => {
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        // click: zoomToFeature
+      });
+    })
+
+    var info = L.control();
+    info.onAdd = function () {
+      this._div = L.DomUtil.create('div', 'info');
+      this.update();
+      return this._div;
+    };
+    info.update = function (props: any) {
+      this._div.innerHTML = (props ?
+        `<div style="
+          padding: 6px 8px; 
+          font: 14px/16px Kanit, Helvetica, sans-serif;
+          background: white; 
+          background: rgba(255, 255, 255, 0.8); 
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+          border-radius: 5px;">
+          <b>${props.f1}</b>
+          <br /> ${props.f2} 
+        </div>`
+        : '');
+    };
+
+
+    // legend
+    var legend = L.control({ position: 'bottomright' });
+    legend.onAdd = function (map) {
+      var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+        labels = [];
+      for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+          '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+      return div;
+    };
+
+
+    if (mapId === 'map1') {
+      await this.map1.eachLayer((lyr: any) => {
+        if (lyr.feature) {
+          this.map1.removeLayer(lyr);
+        }
+      });
+      geojson = L.geoJson(json, {
+        style: style,
+        onEachFeature: onEachFeature
+      }).addTo(this.map1);
+
+      info.addTo(this.map1);
+      legend.addTo(this.map1);
+
+    } else if (mapId === 'map2') {
+      await this.map2.eachLayer((lyr: any) => {
+        if (lyr.feature) {
+          this.map2.removeLayer(lyr);
+        }
+      });
+      geojson = L.geoJson(json, {
+        style: style,
+        onEachFeature: onEachFeature
+      }).addTo(this.map2);
+
+      info.addTo(this.map2);
+      legend.addTo(this.map2);
     }
   }
 
-  clearCorr() {
-    this.loadHeader();
-    this.listCorre = [];
-    this.colCorr_sel = null;
-    this.years = [];
-    this.year_sel = '';
-    this.arrCorr_sel = [];
-    this.lstCorr_sel = [];
+
+  loadMap1() {
+    this.map1 = L.map('map1', this.mapOtp);
+    // basemap
+    const grod = L.tileLayer('http://{s}.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+      maxZoom: 18,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+    const ghyb = L.tileLayer('http://{s}.google.com/vt/lyrs=y,m&x={x}&y={y}&z={z}', {
+      maxZoom: 18,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+    const gter = L.tileLayer('http://{s}.google.com/vt/lyrs=t,m&x={x}&y={y}&z={z}', {
+      maxZoom: 18,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+    // overlay map
+    const mapUrl = 'http://map.nu.ac.th/geoserver-hgis/ows?';
+    const cgiUrl = 'http://www.cgi.uru.ac.th/geoserver/ows?';
+    const w3Url = 'http://www3.cgistln.nu.ac.th/geoserver/gistdata/ows?';
+
+    const pro = L.tileLayer.wms(cgiUrl, {
+      layers: 'th:province_4326',
+      format: 'image/png',
+      transparent: true,
+      zIndex: 5,
+      // CQL_FILTER: 'prov_code=65'
+    });
+
+    const basemap = {
+      'grod': grod,
+      'ghyb': ghyb,
+      'gter': gter.addTo(this.map1),
+    };
+
+    const overlay = {
+      'pro': pro.addTo(this.map1)
+    };
+
+    L.control.layers(basemap, overlay, { position: 'topleft' }).addTo(this.map1);
   }
 
-  // chart
-  getChart(categories: any, series: any) {
+  loadMap2() {
+    this.map2 = L.map('map2', this.mapOtp);
+    // basemap
+    const grod = L.tileLayer('http://{s}.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+      maxZoom: 18,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+    const ghyb = L.tileLayer('http://{s}.google.com/vt/lyrs=y,m&x={x}&y={y}&z={z}', {
+      maxZoom: 18,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+    const gter = L.tileLayer('http://{s}.google.com/vt/lyrs=t,m&x={x}&y={y}&z={z}', {
+      maxZoom: 18,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+    // overlay map
+    const mapUrl = 'http://map.nu.ac.th/geoserver-hgis/ows?';
+    const cgiUrl = 'http://www.cgi.uru.ac.th/geoserver/ows?';
+    const w3Url = 'http://www3.cgistln.nu.ac.th/geoserver/gistdata/ows?';
+
+    const pro = L.tileLayer.wms(cgiUrl, {
+      layers: 'th:province_4326',
+      format: 'image/png',
+      transparent: true,
+      zIndex: 5,
+      // CQL_FILTER: 'prov_code=65'
+    });
+
+    const basemap = {
+      'grod': grod,
+      'ghyb': ghyb,
+      'gter': gter.addTo(this.map2),
+    };
+
+    const overlay = {
+      'pro': pro.addTo(this.map2)
+    };
+
+    L.control.layers(basemap, overlay, { position: 'topleft' }).addTo(this.map2);
+  }
+
+
+
+  getChart(categories: any, series: any, name: string) {
     Highcharts.setOptions({
       lang: {
         thousandsSep: ','
+      },
+      chart: {
+        style: {
+          fontFamily: 'Kanit'
+        }
       }
     });
 
@@ -399,13 +342,13 @@ export class HomeComponent implements OnInit {
         type: 'line'
       },
       title: {
-        text: 'Monthly Average Temperature',
+        text: 'xx',
         style: {
           display: 'none'
         }
       },
       subtitle: {
-        text: 'Source: WorldClimate.com',
+        text: 'x',
         style: {
           display: 'none'
         }
@@ -415,21 +358,13 @@ export class HomeComponent implements OnInit {
       },
       yAxis: {
         title: {
-          text: 'x'
-        }
-      },
-      tooltip: {
-        formatter: function () {
-          return '<b>' + Highcharts.numberFormat(this.y, 0) + '</b> (หน่วย)';
+          text: name
         }
       },
       plotOptions: {
         line: {
           dataLabels: {
-            enabled: true,
-            formatter: function () {
-              return Highcharts.numberFormat(this.y, 2);
-            }
+            enabled: true
           },
           enableMouseTracking: true
         }
@@ -438,127 +373,67 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  createChart(cid: any, categories: any, series: any) {
+  getProChart(categories: any, series: any, name: string, chartId) {
     Highcharts.setOptions({
       lang: {
         thousandsSep: ','
+      },
+      chart: {
+        style: {
+          fontFamily: 'Kanit'
+        }
       }
     });
 
-    Highcharts.chart(cid, {
+    Highcharts.chart(chartId, {
       chart: {
-        type: 'line'
+        type: 'bar'
       },
       title: {
-        text: 'Monthly Average Temperature',
+        text: 'xx',
         style: {
           display: 'none'
         }
       },
       subtitle: {
-        text: 'Source: WorldClimate.com',
+        text: 'xx',
         style: {
           display: 'none'
         }
       },
       xAxis: {
-        categories: categories
+        categories: categories,
+        title: {
+          text: null
+        }
       },
       yAxis: {
+        min: 0,
         title: {
-          text: 'x'
+          text: 'unit',
+          align: 'high'
+        },
+        labels: {
+          overflow: 'justify'
         }
       },
       tooltip: {
-        formatter: function () {
-          return '<b>' + Highcharts.numberFormat(this.y, 0) + '</b> (หน่วย)';
-        }
+        valueSuffix: ' หน่วย'
       },
       plotOptions: {
-        line: {
+        bar: {
           dataLabels: {
-            enabled: true,
-            formatter: function () {
-              return Highcharts.numberFormat(this.y, 2);
-            }
-          },
-          enableMouseTracking: true
+            enabled: true
+          }
         }
+      },
+
+      credits: {
+        enabled: false
       },
       series: series
     });
   }
 
-  createScatter(a: any) {
-    Highcharts.chart('scatter', {
-      chart: {
-        type: 'scatter',
-        zoomType: 'xy'
-      },
-      title: {
-        text: 'Height Versus Weight of 507 Individuals by Gender'
-      },
-      subtitle: {
-        text: 'Source: Heinz  2003'
-      },
-      xAxis: {
-        title: {
-          text: 'Height (cm)'
-        },
-        startOnTick: true,
-        endOnTick: true,
-        showLastLabel: true
-      },
-      yAxis: {
-        title: {
-          text: 'Weight (kg)'
-        }
-      },
-      legend: {
-        layout: 'vertical',
-        align: 'left',
-        verticalAlign: 'top',
-        x: 100,
-        y: 70,
-        floating: true,
-        // backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-        borderWidth: 1
-      },
-      plotOptions: {
-        scatter: {
-          marker: {
-            radius: 5,
-            states: {
-              hover: {
-                enabled: true,
-                lineColor: 'rgb(100,100,100)'
-              }
-            }
-          },
-          states: {
-            hover: {
-              marker: {
-                enabled: false
-              }
-            }
-          },
-          tooltip: {
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '{point.x} cm, {point.y} kg'
-          }
-        }
-      },
-      series: [{
-        name: 'Female',
-        color: 'rgba(223, 83, 83, .5)',
-        data: a
-      }]
-    });
-  }
-}
 
-
-export interface Series {
-  name?: string;
-  data: number;
 }

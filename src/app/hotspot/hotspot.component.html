@@ -1,18 +1,38 @@
 <div class="container mt-6">
   <div class="row">
     <div class="col-lg-8">
-      <div class="card border-light mb-3">
-        <div class="card-header">Map</div>
-        <div class="card-map">
-          <div id="map"></div>
+      <div class="card border-secondary mb-3">
+        <div class="card-header">map</div>
+        <div class="card-body" id="map">
         </div>
       </div>
     </div>
     <div class="col-lg-4">
       <div class="card border-light mb-3">
-        <div class="card-header">จุดความร้อนประเทศไทย ปี {{year}}</div>
+        <div class="card-header">จำนวนจุดความร้อนที่พบวันนี้</div>
         <div class="card-body">
-          <div id="th"></div>
+          <div id="th">
+            <span style="font-size: 25px;font-weight: bold">
+              {{hpSum | number: '1.0-0'}}
+            </span>แห่ง
+          </div>
+        </div>
+      </div>
+      <div class="card border-light mb-3">
+        <div class="card-header">จำนวนจุดความร้อนที่พบวันนี้</div>
+        <div class="card-body">
+          <br /> &nbsp;&nbsp;&nbsp;ระดับคุณภาพอากาศ
+          <br />&nbsp;&nbsp;&nbsp;
+          <img src="http://cgi.uru.ac.th/fire_assets/img/aqi1.png" style="width: 20px">&nbsp;ดีมาก
+          <br />&nbsp;&nbsp;&nbsp;
+          <img src="http://cgi.uru.ac.th/fire_assets/img/aqi2.png" style="width: 20px">&nbsp;ดี
+          <br />&nbsp;&nbsp;&nbsp;
+          <img src="http://cgi.uru.ac.th/fire_assets/img/aqi3.png" style="width: 20px">&nbsp;ปานกลาง
+          <br />&nbsp;&nbsp;&nbsp;
+          <img src="http://cgi.uru.ac.th/fire_assets/img/aqi4.png" style="width: 20px">&nbsp;เริ่มมีผลกระทบต่อสุขภาพ
+          <br />&nbsp;&nbsp;&nbsp;
+          <img src="http://cgi.uru.ac.th/fire_assets/img/aqi5.png" style="width: 20px">&nbsp;มีผลกระทบต่อสุขภาพ
+          <br />
         </div>
       </div>
     </div>

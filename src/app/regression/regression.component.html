@@ -1,0 +1,57 @@
+<div class="mb-6">
+  <p>วิเคราะห์ความสัมพันธ์ของข้อมูล (correlation) โดยเลือกข้อมูลและปีที่ต้องการศึกษา</p>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก tables</label>
+        <select class="form-control" [(ngModel)]="tb" (ngModelChange)="listField($event)">
+          <option *ngFor="let t of tables" [ngValue]="t">{{t.data}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก field</label>
+        <select class="form-control" [(ngModel)]="fld" (ngModelChange)="selectData($event)">
+          <option *ngFor="let f of fields" [ngValue]="f">{{f.descb}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก ปี</label>
+        <select class="form-control" [(ngModel)]="yr" (ngModelChange)="selectByYear($event)">
+          <option *ngFor="let y of year" [ngValue]="y">{{y.year}}</option>
+        </select>
+      </div>
+
+      <p><span class="badge badge-warning">{{notifyCorr}}</span></p>
+      <button class="btn btn-primary" (click)="addParam()"><i class="fa fa-plus-circle"></i>&nbsp;เพิ่มข้อมูล</button>&nbsp;
+      <button class="btn btn-danger" (click)="clearParam()"><i class="fa fa-times-circle"></i>&nbsp;ลบข้อมูลที่เลือก</button>
+      <p></p>
+
+    </div>
+    <div class="col-6 minitron">
+      <label for="exampleTextarea">ข้อมูลที่ถูกเลือก</label>
+      <div class="form-group" style="background-color: aliceblue">
+        <ul>
+          <li *ngFor="let l of lstCorr_sel; let i = index">
+            {{i + 1 + '.'}}{{ l.descb }} {{'ปี: '+ l.year }}
+          </li>
+        </ul>
+      </div>
+      <br />
+      <button class="btn btn-primary" (click)="calCorrelation()"><i class="fa fa-bar-chart"></i>&nbsp;แสดงผลการวิเคราะห์</button>
+    </div>
+  </div>
+  <p></p>
+  <hr>
+  <p></p>
+  ผลการวิเคราะห์
+  <p></p>
+  <div id="regChart"></div>
+  <div class="row">
+    <div class="col-6" style="padding-top: 15px; padding-bottom: 15px;" *ngFor="let a of arrCorr_sel">
+      <div class="card">
+        <div [attr.id]="a.cid"></div>
+      </div>
+    </div>
+  </div>
+</div>
