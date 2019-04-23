@@ -1,0 +1,80 @@
+<div class="mb-6">
+  <div class="row">
+    <div class="col-5">
+      <div class="form-group">
+        <label for="exampleSelect1">ชั้นข้อมูล1</label>
+        <select class="form-control" [(ngModel)]="tb" (ngModelChange)="listField($event)">
+          <option *ngFor="let t of tables" [ngValue]="t">{{t.data}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก field</label>
+        <select class="form-control" [(ngModel)]="fld" (ngModelChange)="selectData($event)">
+          <option *ngFor="let f of fields" [ngValue]="f">{{f.descb}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก ปี</label>
+        <select class="form-control" [(ngModel)]="yr" (ngModelChange)="selectByYear($event)">
+          <option *ngFor="let y of year" [ngValue]="y">{{y.year}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-2">
+      <div class="form-group">
+        <label for="exampleSelect1">expression</label>
+        <select class="form-control" [(ngModel)]="exp" (ngModelChange)="selectExp($event)">
+          <option *ngFor="let e of exps" [ngValue]="e">{{e.exp}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-5">
+      <div class="form-group">
+        <label for="exampleSelect1">ชั้นข้อมูล2</label>
+        <select class="form-control" [(ngModel)]="tb2" (ngModelChange)="listField2($event)">
+          <option *ngFor="let t of tables2" [ngValue]="t">{{t.data}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก field</label>
+        <select class="form-control" [(ngModel)]="fld2" (ngModelChange)="selectData2($event)">
+          <option *ngFor="let f of fields2" [ngValue]="f">{{f.descb}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก ปี</label>
+        <select class="form-control" [(ngModel)]="yr2" (ngModelChange)="selectByYear2($event)">
+          <option *ngFor="let y of year2" [ngValue]="y">{{y.year}}</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+
+      </div>
+
+      <p><span class="badge badge-warning">{{notifyCorr}}</span></p>
+      <button class="btn btn-primary" (click)="calMap()"><i class="fa fa-plus-circle"></i>&nbsp;เพิ่มข้อมูล</button>&nbsp;
+      <button class="btn btn-danger" (click)="clearParam()"><i class="fa fa-times-circle"></i>&nbsp;ลบข้อมูลที่เลือก</button>
+      <p></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-secondary mb-3">
+        <div class="card-header">map</div>
+        <div class="card-body" id="map">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

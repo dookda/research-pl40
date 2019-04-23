@@ -1,0 +1,36 @@
+<div class="mb-6">
+  <div class="row">
+    <div class="col-lg-4">
+
+
+      <div class="jumbotron" style="margin-bottom: 0px; height: 470px">
+        <div class="form-group">
+          <label for="exampleSelect1">เลือก tables</label>
+          <select class="form-control" [(ngModel)]="tb" (ngModelChange)="listField($event)">
+            <option *ngFor="let t of tables" [ngValue]="t">{{t.data}}</option>
+          </select>
+        </div>
+        <p></p>
+        <!-- <div class="form-group">
+          <label for="exampleSelect1">เลือก field</label>
+          <select class="form-control" [(ngModel)]="fld" (ngModelChange)="selectData($event)">
+            <option *ngFor="let f of fields" [ngValue]="f">{{f.descb}}</option>
+          </select>
+        </div> -->
+
+        <div style="padding-top:40px">
+          <p></p>
+          <h3> {{tbName}}</h3>
+          {{fldName}}
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-8">
+      <div class="card border-secondary">
+        <div class="card-header">Header</div>
+        <div class="card-body" id="chart"></div>
+      </div>
+    </div>
+  </div>
+</div>

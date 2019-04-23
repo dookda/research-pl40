@@ -1,0 +1,300 @@
+<div class="mb-6">
+  <p>AHP</p>
+  <p></p>
+
+  <div class="row">
+
+    <div class="col-lg-6">
+      1.ระบุปัจจัย
+      <table style="width:100%">
+        <tr>
+        <tr>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_a"></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_b"></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_c"></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_d"></td>
+        </tr>
+        <tr>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_e"></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-lg-6">
+      <!-- <div class="form-group">
+        <label for="exampleSelect1">เลือก tables</label>
+        <select class="form-control" [(ngModel)]="tb" (ngModelChange)="listField($event)">
+          <option *ngFor="let t of tables" [ngValue]="t">{{t.data}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก field</label>
+        <select class="form-control" [(ngModel)]="fld" (ngModelChange)="selectData($event)">
+          <option *ngFor="let f of fields" [ngValue]="f">{{f.descb}}</option>
+        </select>
+      </div> -->
+      <!-- 2..ให้คะแนนความสำคัญ
+      <br>
+      <label style="background-color: #ff0000">1/9: น้อยกว่าที่สุด</label> <br>
+      <label style="background-color:#ff4000">1/7: อย่างเห็นได้ชัด</label> <br>
+      <label style="background-color:#ff8000">1/5: ปานกลาง</label> <br>
+      <label style="background-color:#ffbf00">1/3: เล็กน้อย</label> <br>
+      <label style="background-color:#ffff00">1: สำคัญเท่ากัน</label> <br>
+      <label style="background-color:#bfff00">3: เล็กน้อย</label> <br>
+      <label style="background-color:#1fe600">5: ปานกลาง</label> <br>
+      <label style="background-color:#18b300">7: อย่างเห็นได้ชัด</label> <br>
+      <label style="background-color:#118000">9: มากกว่าที่สุด</label> <br>
+ -->
+
+
+
+
+      <!-- <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio1" value="1/9" [(ngModel)]="radio" (change)="typeSelect('1/9')" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio1" style="background-color: #ff0000">น้อยกว่าที่สุด (1/9)</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio2" value="1/7" [(ngModel)]="radio" (change)="typeSelect('1/7')" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio2" style="background-color:#ff4000">อย่างเห็นได้ชัด (1/7)</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio3" [value]="1/5" [(ngModel)]="radio" (change)="typeSelect('1/5')" checked=""
+          class="custom-control-input">
+        <label class="custom-control-label" for="customRadio3" style="background-color:#ff8000">ปานกลาง (1/5)</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio4" value="1/3" [(ngModel)]="radio" (change)="typeSelect('1/3')" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio4" style="background-color:#ffbf00">เล็กน้อย (1/3)</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio5" value="1" [(ngModel)]="radio" (change)="typeSelect('1')" class="custom-control-input"
+          checked="">
+        <label class="custom-control-label" for="customRadio5" style="background-color:#ffff00">สำคัญเท่ากัน (1)</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio6" value="3" [(ngModel)]="radio" (change)="typeSelect('3')" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio6" style="background-color:#bfff00">เล้กน้อย (3)</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio7" value="5" [(ngModel)]="radio" (change)="typeSelect('5')" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio7" style="background-color:#1fe600">ปานกลาง (5)</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio8" value="7" [(ngModel)]="radio" (change)="typeSelect('7')" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio8" style="background-color:#18b300">อย่างเห็นได้ชัด (7)</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio9" value="9" [(ngModel)]="radio" (change)="typeSelect('9')" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio9" style="background-color:#118000">มากกว่าที่สุด (9)</label>
+      </div> -->
+
+      <!-- <p><span class="badge badge-warning">{{notifyCorr}}</span></p>
+      <button class="btn btn-primary" (click)="addParam()"><i class="fa fa-plus-circle"></i>&nbsp;เพิ่มข้อมูล</button>&nbsp;
+      <button class="btn btn-danger" (click)="clearParam()"><i class="fa fa-times-circle"></i>&nbsp;ลบข้อมูลที่เลือก</button>
+      <p></p> -->
+    </div>
+
+
+
+  </div>
+
+
+
+  <div class="row" *ngFor="let i of dataSel">
+    <div class="row">
+      <label for="ex1">{{ i }}</label>
+      <input class="form-control" id="ex1" type="number">
+    </div>
+    <div class="row">
+      <label for="ex1">{{ i }}</label>
+      <input class="form-control" id="ex1" type="number">
+    </div>
+  </div>
+
+  <p></p>
+  <hr>
+
+  2.ให้คะแนนความสัมคัญแบบ Pairwise Comparison Matrix
+
+  <table style="width:100%">
+    <tr>
+      <th></th>
+      <th>{{fac_a}}</th>
+      <th>{{fac_b}}</th>
+      <th>{{fac_c}}</th>
+      <th>{{fac_d}}</th>
+      <th>{{fac_e}}</th>
+    </tr>
+    <tr>
+      <td>{{fac_a}}</td>
+      <td><input type="number" class="form-control" [(ngModel)]="a1" disabled></td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="b1" (change)="calAHP('a2',$event)"> -->
+        <select class="form-control" [(ngModel)]="b1" (change)="calAHP('a2',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="c1" (change)="calAHP('a3',$event)"> -->
+        <select class="form-control" [(ngModel)]="c1" (change)="calAHP('a3',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="d1" (change)="calAHP('a4',$event)"> -->
+        <select class="form-control" [(ngModel)]="d1" (change)="calAHP('a4',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="e1" (change)="calAHP('a5',$event)"> -->
+        <select class="form-control" [(ngModel)]="e1" (change)="calAHP('a5',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>{{fac_b}}</td>
+      <td><input type="number" class="form-control" [(ngModel)]="a2" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="b2" disabled></td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="c2" (change)="calAHP('b3',$event)"> -->
+        <select class="form-control" [(ngModel)]="c2" (change)="calAHP('b3',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="d2" (change)="calAHP('b4',$event)"> -->
+        <select class="form-control" [(ngModel)]="d2" (change)="calAHP('b4',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="e2" (change)="calAHP('b5',$event)"> -->
+        <select class="form-control" [(ngModel)]="e2" (change)="calAHP('b5',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>{{fac_c}}</td>
+      <td><input type="number" class="form-control" [(ngModel)]="a3" [value]="c1" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="b3" [value]="c2" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="c3" disabled></td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="d3" (change)="calAHP('c4',$event)"> -->
+        <select class="form-control" [(ngModel)]="d3" (change)="calAHP('c4',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="e3" (change)="calAHP('c5',$event)"> -->
+        <select class="form-control" [(ngModel)]="e3" (change)="calAHP('c5',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>{{fac_d}}</td>
+      <td><input type="number" class="form-control" [(ngModel)]="a4" [value]="d1" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="b4" [value]="d2" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="c4" [value]="d3" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="d4" disabled></td>
+      <td>
+        <!-- <input type="number" class="form-control" [(ngModel)]="e4" (change)="calAHP('d5',$event)"> -->
+        <select class="form-control" [(ngModel)]="e4" (change)="calAHP('d5',$event)">
+          <option *ngFor="let i of selItem" [value]="i.val">
+            {{i.name}}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>{{fac_e}}</td>
+      <td><input type="number" class="form-control" [(ngModel)]="a5" [value]="e1" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="b5" [value]="e2" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="c5" [value]="e3" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="d5" [value]="e4" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="e5" disabled></td>
+    </tr>
+
+  </table>
+
+  <p></p>
+  <button class="btn btn-primary" (click)="sumWeight()"><i class="fa fa-plus-circle"></i>&nbsp;วิเคราะห์ข้อมูล</button>&nbsp;
+
+  <p></p>
+  <hr>
+
+  3.ผลรวมของค่าน้ำหนัก
+  <table style="width:100%">
+    <tr>
+      <th>{{fac_a}}</th>
+      <th>{{fac_b}}</th>
+      <th>{{fac_c}}</th>
+      <th>{{fac_d}}</th>
+      <th>{{fac_e}}</th>
+    </tr>
+    <tr>
+      <td><input type="number" class="form-control" [(ngModel)]="sum_a" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="sum_b" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="sum_c" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="sum_d" disabled></td>
+      <td><input type="number" class="form-control" [(ngModel)]="sum_e" disabled></td>
+    </tr>
+  </table>
+
+  <p></p>
+  <hr>
+
+  <div class="row">
+    <div class="col-4">
+      4.คำนวณค่า Eigenvector
+      <table>
+        <tr>
+          <th>factor</th>
+          <th>value</th>
+        </tr>
+        <tr *ngFor="let e of eigenVector">
+          <td><input type="text" class="form-control" [value]="e.name"></td>
+          <td><input type="text" class="form-control" [value]="e.value | number"></td>
+        </tr>
+      </table>
+
+    </div>
+    <div class="col-8">
+      5.คำนวณความสอดคล้องของข้อมูล<p></p>
+      L: {{l | number}} <p></p>
+      CI: {{ci | number}} <p></p>
+      CR: {{cr | number}} *<p></p>
+
+      *ค่า CR < 0.1 แสดงว่าค่าปัจจัยมีความสอดคล้องกัน สามารถนำ Eigenvector ไปใช้เป็นค่าน้ำหนักได้ <p>
+        </p>
+        *ค่า CR> 0.1 แสดงว่าค่าปัจจัยไม่มีความสอดคล้องกัน ต้องปรับหรือให้ค่าปัจจัยใหม่
+    </div>
+  </div>
+</div>

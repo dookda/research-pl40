@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url("https://use.fontawesome.com/releases/v5.5.0/css/all.css");
+
+@import url("https://fonts.googleapis.com/css?family=Kanit");
+@import url("https://unpkg.com/leaflet@1.4.0/dist/leaflet.css");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
+
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~@fortawesome/fontawesome-free/css/fontawesome.min.css";
+// @import "~bootswatch/dist/materia/bootstrap.min.css";
+@import "~bootswatch/dist/flatly/bootstrap.min.css";
+
+.mb-6 {
+  margin-top: 4.5rem !important
+}
+
+.mt-6,
+.my-6 {
+  margin-top: 4.5rem !important
+}

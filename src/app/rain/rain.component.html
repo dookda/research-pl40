@@ -1,0 +1,113 @@
+<div class="container mt-6">
+
+  <div class="form-group">
+    <div class="col-lg-12">
+
+      <div class="row">
+
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" [value]="true" [(ngModel)]="radio" (change)="typeSelect('Rainfall')" checked="">
+            ปริมาณฝน (มิลลิเมตร)
+          </label>
+        </div>
+
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" value="Temperature" [(ngModel)]="radio" (change)="typeSelect('Temperature')">
+            อุณหภูมิบาโรมิเตอร์ (องศาเซลซียส)
+          </label>
+        </div>
+
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" value="StationPressure" [(ngModel)]="radio" (change)="typeSelect('StationPressure')">
+            ความกดอากาศที่สถานี (มิลลิบาร์)
+          </label>
+        </div>
+
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" value="MeanSeaLevelPressure" [(ngModel)]="radio" (change)="typeSelect('MeanSeaLevelPressure')">
+            ความกดอากาศที่ระดับน้ำทะเล (มิลลิบาร์)
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" value="DewPoint" [(ngModel)]="radio" (change)="typeSelect('DewPoint')">
+            อุณหภูมิจุดน้ำค้าง (องศาเซลซียส)
+          </label>
+        </div>
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" value="RelativeHumidity" [(ngModel)]="radio" (change)="typeSelect('RelativeHumidity')">
+            ความชื้นสัมพัทธ์ (เปอร์เซนต์)
+          </label>
+        </div>
+
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" value="VaporPressure" [(ngModel)]="radio" (change)="typeSelect('VaporPressure')">
+            ความดันไอ (มิลลิบาร์)
+          </label>
+        </div>
+
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" value="LandVisibility" [(ngModel)]="radio" (change)="typeSelect('LandVisibility')">
+            ทัศนวิสัยทางบก (กิโลเมตร)
+          </label>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" value="WindDirection" [(ngModel)]="radio" (change)="typeSelect('WindDirection')">
+            ทิศทางลม (องศา)
+          </label>
+        </div>
+
+        <div class="col-lg-3 radio">
+          <label>
+            <input type="radio" value="WindSpeed" [(ngModel)]="radio" (change)="typeSelect('WindSpeed')">
+            ความเร็วลม (กิโลเมตร/ชั่วโมง)
+          </label>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card border-secondary mb-3">
+        <div class="card-header">map</div>
+        <div class="card-body" id="map">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <!-- <div class="card border-light mb-3">
+        <div class="card-header">ปริมาณน้ำฝนประเทศไทย ปี {{year}}</div>
+        <div class="card-body" id="list">
+          <ul class="list-group-item list-group-item-action" *ngFor="let m of meteo">
+            <li>{{m.StationNameTh}} {{m.Observe.Rainfall.Value}} {{m.Observe.Rainfall.Unit}}</li>
+          </ul>
+        </div>
+      </div> -->
+
+
+
+      <div class="card border-secondary mb-3">
+        <div class="card-header">Header</div>
+        <div class="card-body chart" id="chart">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
