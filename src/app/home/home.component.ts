@@ -121,6 +121,7 @@ export class HomeComponent implements OnInit {
 
   async loadJsonToMap(json: any, mapId: any) {
     let geojson: any;
+    const info = L.control();
 
     const getColor = ((d: any) => {
       return d > 1000 ? '#800026' :
@@ -133,7 +134,7 @@ export class HomeComponent implements OnInit {
                     '#FFEDA0';
     });
 
-    let style = ((feature: any) => {
+    const style = ((feature: any) => {
       return {
         fillColor: getColor(feature.properties.f2),
         weight: 2,
@@ -146,7 +147,7 @@ export class HomeComponent implements OnInit {
 
     // info
     function highlightFeature(e: any) {
-      var layer = e.target;
+      const layer = e.target;
       layer.setStyle({
         weight: 5,
         color: '#666',
@@ -173,7 +174,7 @@ export class HomeComponent implements OnInit {
       });
     })
 
-    var info = L.control();
+
     info.onAdd = function () {
       this._div = L.DomUtil.create('div', 'info');
       this.update();
@@ -196,12 +197,12 @@ export class HomeComponent implements OnInit {
 
 
     // legend
-    var legend = L.control({ position: 'bottomright' });
+    const legend = L.control({ position: 'bottomright' });
     legend.onAdd = function (map) {
-      var div = L.DomUtil.create('div', 'info legend'),
+      const div = L.DomUtil.create('div', 'info legend'),
         grades = [0, 10, 20, 50, 100, 200, 500, 1000],
         labels = [];
-      for (var i = 0; i < grades.length; i++) {
+      for (let i = 0; i < grades.length; i++) {
         div.innerHTML +=
           '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
           grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
