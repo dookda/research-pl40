@@ -1,107 +1,158 @@
 <div class="mb-6">
   <p>AHP</p>
   <p></p>
+  1.ระบุปัจจัย
+  <div class="row">
+    <div class="col-lg-1" style="height: 90px;line-height: 90px;text-align: center;">ปัจจัยที่ 1</div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก tables</label>
+        <select class="form-control" [(ngModel)]="tb1" (ngModelChange)="listField('tb1')">
+          <option *ngFor="let t of tb1_lst" [ngValue]="t">{{t.data}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก field</label>
+        <select class="form-control" [(ngModel)]="fld1" (ngModelChange)="listYear('tb1')">
+          <option *ngFor="let f of fld1_lst" [ngValue]="f">{{f.descb}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <label for="exampleSelect1">เลือก ปี</label>
+        <select class="form-control" [(ngModel)]="yr1" (ngModelChange)="selectData('tb1')">
+          <option *ngFor="let y of yr1_lst" [ngValue]="y">{{y.year}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-1">ปัจจัยที่ 2</div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="tb2" (ngModelChange)="listField('tb2')">
+          <option *ngFor="let t of tb2_lst" [ngValue]="t">{{t.data}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="fld2" (ngModelChange)="listYear('tb2')">
+          <option *ngFor="let f of fld2_lst" [ngValue]="f">{{f.descb}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="yr2" (ngModelChange)="selectData('tb2')">
+          <option *ngFor="let y of yr2_lst" [ngValue]="y">{{y.year}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-1">ปัจจัยที่ 3</div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="tb3" (ngModelChange)="listField('tb3')">
+          <option *ngFor="let t of tb3_lst" [ngValue]="t">{{t.data}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="fld3" (ngModelChange)="listYear('tb3')">
+          <option *ngFor="let f of fld3_lst" [ngValue]="f">{{f.descb}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="yr3" (ngModelChange)="selectData('tb3')">
+          <option *ngFor="let y of yr3_lst" [ngValue]="y">{{y.year}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-1">ปัจจัยที่ 4</div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="tb4" (ngModelChange)="listField('tb4')">
+          <option *ngFor="let t of tb4_lst" [ngValue]="t">{{t.data}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="fld4" (ngModelChange)="listYear('tb4')">
+          <option *ngFor="let f of fld4_lst" [ngValue]="f">{{f.descb}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="yr4" (ngModelChange)="selectData('tb4')">
+          <option *ngFor="let y of yr4_lst" [ngValue]="y">{{y.year}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-1">ปัจจัยที่ 5</div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="tb5" (ngModelChange)="listField('tb5')">
+          <option *ngFor="let t of tb5_lst" [ngValue]="t">{{t.data}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="fld5" (ngModelChange)="listYear('tb5')">
+          <option *ngFor="let f of fld5_lst" [ngValue]="f">{{f.descb}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <select class="form-control" [(ngModel)]="yr5" (ngModelChange)="selectData('tb5')">
+          <option *ngFor="let y of yr5_lst" [ngValue]="y">{{y.year}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
 
   <div class="row">
-
-    <div class="col-lg-6">
-      1.ระบุปัจจัย
+    <div class="col-lg-12">
+      ปัจจัยที่เลือก
       <table style="width:100%">
         <tr>
         <tr>
-          <td><input type="text" class="form-control" [(ngModel)]="fac_a"></td>
+          <td style="width:10%">ปัจจัยที่ 1</td>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_a" disabled></td>
         </tr>
         <tr>
-          <td><input type="text" class="form-control" [(ngModel)]="fac_b"></td>
+          <td style="width:10%">ปัจจัยที่ 2</td>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_b" disabled></td>
         </tr>
         <tr>
-          <td><input type="text" class="form-control" [(ngModel)]="fac_c"></td>
+          <td style="width:10%">ปัจจัยที่ 3</td>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_c" disabled></td>
         </tr>
         <tr>
-          <td><input type="text" class="form-control" [(ngModel)]="fac_d"></td>
+          <td style="width:10%">ปัจจัยที่ 4</td>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_d" disabled></td>
         </tr>
         <tr>
-          <td><input type="text" class="form-control" [(ngModel)]="fac_e"></td>
+          <td style="width:10%">ปัจจัยที่ 5</td>
+          <td><input type="text" class="form-control" [(ngModel)]="fac_e" disabled></td>
         </tr>
       </table>
     </div>
-
-    <div class="col-lg-6">
-      <!-- <div class="form-group">
-        <label for="exampleSelect1">เลือก tables</label>
-        <select class="form-control" [(ngModel)]="tb" (ngModelChange)="listField($event)">
-          <option *ngFor="let t of tables" [ngValue]="t">{{t.data}}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="exampleSelect1">เลือก field</label>
-        <select class="form-control" [(ngModel)]="fld" (ngModelChange)="selectData($event)">
-          <option *ngFor="let f of fields" [ngValue]="f">{{f.descb}}</option>
-        </select>
-      </div> -->
-      <!-- 2..ให้คะแนนความสำคัญ
-      <br>
-      <label style="background-color: #ff0000">1/9: น้อยกว่าที่สุด</label> <br>
-      <label style="background-color:#ff4000">1/7: อย่างเห็นได้ชัด</label> <br>
-      <label style="background-color:#ff8000">1/5: ปานกลาง</label> <br>
-      <label style="background-color:#ffbf00">1/3: เล็กน้อย</label> <br>
-      <label style="background-color:#ffff00">1: สำคัญเท่ากัน</label> <br>
-      <label style="background-color:#bfff00">3: เล็กน้อย</label> <br>
-      <label style="background-color:#1fe600">5: ปานกลาง</label> <br>
-      <label style="background-color:#18b300">7: อย่างเห็นได้ชัด</label> <br>
-      <label style="background-color:#118000">9: มากกว่าที่สุด</label> <br>
- -->
-
-
-
-
-      <!-- <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio1" value="1/9" [(ngModel)]="radio" (change)="typeSelect('1/9')" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio1" style="background-color: #ff0000">น้อยกว่าที่สุด (1/9)</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio2" value="1/7" [(ngModel)]="radio" (change)="typeSelect('1/7')" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio2" style="background-color:#ff4000">อย่างเห็นได้ชัด (1/7)</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio3" [value]="1/5" [(ngModel)]="radio" (change)="typeSelect('1/5')" checked=""
-          class="custom-control-input">
-        <label class="custom-control-label" for="customRadio3" style="background-color:#ff8000">ปานกลาง (1/5)</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio4" value="1/3" [(ngModel)]="radio" (change)="typeSelect('1/3')" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio4" style="background-color:#ffbf00">เล็กน้อย (1/3)</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio5" value="1" [(ngModel)]="radio" (change)="typeSelect('1')" class="custom-control-input"
-          checked="">
-        <label class="custom-control-label" for="customRadio5" style="background-color:#ffff00">สำคัญเท่ากัน (1)</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio6" value="3" [(ngModel)]="radio" (change)="typeSelect('3')" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio6" style="background-color:#bfff00">เล้กน้อย (3)</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio7" value="5" [(ngModel)]="radio" (change)="typeSelect('5')" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio7" style="background-color:#1fe600">ปานกลาง (5)</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio8" value="7" [(ngModel)]="radio" (change)="typeSelect('7')" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio8" style="background-color:#18b300">อย่างเห็นได้ชัด (7)</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio9" value="9" [(ngModel)]="radio" (change)="typeSelect('9')" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio9" style="background-color:#118000">มากกว่าที่สุด (9)</label>
-      </div> -->
-
-      <!-- <p><span class="badge badge-warning">{{notifyCorr}}</span></p>
-      <button class="btn btn-primary" (click)="addParam()"><i class="fa fa-plus-circle"></i>&nbsp;เพิ่มข้อมูล</button>&nbsp;
-      <button class="btn btn-danger" (click)="clearParam()"><i class="fa fa-times-circle"></i>&nbsp;ลบข้อมูลที่เลือก</button>
-      <p></p> -->
-    </div>
-
-
-
   </div>
 
 
@@ -245,7 +296,8 @@
   </table>
 
   <p></p>
-  <button class="btn btn-primary" (click)="sumWeight()"><i class="fa fa-plus-circle"></i>&nbsp;วิเคราะห์ข้อมูล</button>&nbsp;
+  <button class="btn btn-primary" (click)="sumWeight()"><i
+      class="fa fa-plus-circle"></i>&nbsp;วิเคราะห์ข้อมูล</button>&nbsp;
 
   <p></p>
   <hr>
@@ -272,21 +324,21 @@
   <hr>
 
   <div class="row">
-    <div class="col-4">
+    <div class="col-8">
       4.คำนวณค่า Eigenvector
-      <table>
+      <table style="width:100%">
         <tr>
           <th>factor</th>
           <th>value</th>
         </tr>
         <tr *ngFor="let e of eigenVector">
           <td><input type="text" class="form-control" [value]="e.name"></td>
-          <td><input type="text" class="form-control" [value]="e.value | number"></td>
+          <td style="width:10%"><input type="text" class="form-control" [value]="e.value | number"></td>
         </tr>
       </table>
 
     </div>
-    <div class="col-8">
+    <div class="col-4">
       5.คำนวณความสอดคล้องของข้อมูล<p></p>
       L: {{l | number}} <p></p>
       CI: {{ci | number}} <p></p>
@@ -298,3 +350,5 @@
     </div>
   </div>
 </div>
+<p></p>
+<p></p>

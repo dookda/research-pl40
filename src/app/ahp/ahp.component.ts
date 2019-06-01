@@ -8,11 +8,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ahp.component.scss']
 })
 export class AhpComponent implements OnInit {
-  public tables: any;
-  public tb: any;
+
+  public tb1: any;
+  public tb2: any;
+  public tb3: any;
+  public tb4: any;
+  public tb5: any;
+  public tb1_lst: any;
+  public tb2_lst: any;
+  public tb3_lst: any;
+  public tb4_lst: any;
+  public tb5_lst: any;
+
+  public fld1: any;
+  public fld2: any;
+  public fld3: any;
+  public fld4: any;
+  public fld5: any;
+  public fld1_lst: any;
+  public fld2_lst: any;
+  public fld3_lst: any;
+  public fld4_lst: any;
+  public fld5_lst: any;
+
+  public yr1: any;
+  public yr2: any;
+  public yr3: any;
+  public yr4: any;
+  public yr5: any;
+  public yr1_lst: any;
+  public yr2_lst: any;
+  public yr3_lst: any;
+  public yr4_lst: any;
+  public yr5_lst: any;
+
   public tbName = '';
-  public fields: any;
-  public fld: any;
   public fldName = '';
   public radio: any;
   public score: any;
@@ -126,56 +156,82 @@ export class AhpComponent implements OnInit {
 
   listTable() {
     this.dataService.listTable().then((res: any) => {
-      this.tables = res.data;
+      this.tb1_lst = res.data;
+      this.tb2_lst = res.data;
+      this.tb3_lst = res.data;
+      this.tb4_lst = res.data;
+      this.tb5_lst = res.data;
     });
   }
 
-  listField(e: any) {
-    this.dataService.listField(this.tb.table).then((res: any) => {
-      this.tbName = this.tb.data;
-      this.fields = res.data;
-    });
-  }
-
-  selectData(e: any) {
-    this.fldName = e.descb;
-    // this.listYear();
-  }
-
-  typeSelect(a: any) {
-
-    // this.score = a;
-    // console.log(a);
-  }
-
-  async addParam() {
-    let datArr: DataObj = {};
-    if (!this.fld || this.fld.code.length < 1) {
-      this.notifyCorr = 'กรุณาเลือกข้อมูลที่ต้องการวิเคราะห์';
+  listField(tb: any) {
+    if (tb === 'tb1') {
+      this.dataService.listField(this.tb1.table).then((res: any) => {
+        this.fld1_lst = res.data;
+      });
+    } else if (tb === 'tb2') {
+      this.dataService.listField(this.tb2.table).then((res: any) => {
+        this.fld2_lst = res.data;
+      });
+    } else if (tb === 'tb3') {
+      this.dataService.listField(this.tb3.table).then((res: any) => {
+        this.fld3_lst = res.data;
+      });
+    } else if (tb === 'tb4') {
+      this.dataService.listField(this.tb4.table).then((res: any) => {
+        this.fld4_lst = res.data;
+      });
     } else {
-      this.notifyCorr = '';
-      datArr = {
-        tb: this.tb.table,
-        tbName: this.tb.data,
-        code: this.fld.code,
-        descb: this.fld.descb,
-        id: this.fld.id,
-        unit: this.fld.unit,
-        // score: this.score,
-      }
-      this.lstCorr_sel.push(datArr);
-
-      // console.log(datArr);
-      this.dataSel.push(this.fld.descb);
-      console.log(this.dataSel);
-      // await this.dataService.selectDataCorr(this.tb.table, this.fld.code, this.yr.year).then((res: any) => {
-      //   this.datCorr_sel.push(res.data);
-      //   this.createDom();
-      // });
+      this.dataService.listField(this.tb5.table).then((res: any) => {
+        this.fld5_lst = res.data;
+      });
     }
   }
 
+  listYear(tb: any) {
+    if (tb === 'tb1') {
+      this.dataService.listYear(this.tb1.table).then((res: any) => {
+        this.yr1_lst = res.data;
+      });
+    } else if (tb === 'tb2') {
+      this.dataService.listYear(this.tb2.table).then((res: any) => {
+        this.yr2_lst = res.data;
+      });
+    } else if (tb === 'tb3') {
+      this.dataService.listYear(this.tb3.table).then((res: any) => {
+        this.yr3_lst = res.data;
+      });
+    } else if (tb === 'tb4') {
+      this.dataService.listYear(this.tb4.table).then((res: any) => {
+        this.yr4_lst = res.data;
+      });
+    } else {
+      this.dataService.listYear(this.tb5.table).then((res: any) => {
+        this.yr5_lst = res.data;
+        // this.fac_e = this.yr5;
+      });
+    }
+  }
 
+  selectData(tb: any) {
+    if (tb === 'tb1') {
+      this.fac_a = this.tb1.data + ' ' + this.fld1.descb + ' ' + this.yr1.year;
+    } else if (tb === 'tb2') {
+      this.fac_b = this.tb2.data + ' ' + this.fld2.descb + ' ' + this.yr2.year;
+    } else if (tb === 'tb3') {
+      this.fac_c = this.tb3.data + ' ' + this.fld3.descb + ' ' + this.yr3.year;
+    } else if (tb === 'tb4') {
+      this.fac_d = this.tb4.data + ' ' + this.fld4.descb + ' ' + this.yr4.year;
+    } else {
+      this.fac_e = this.tb5.data + ' ' + this.fld5.descb + ' ' + this.yr5.year;
+    }
+    console.log(this.yr1);
+  }
+
+  typeSelect(a: any) {
+    // this.score = a;
+    // console.log(a);
+  }
 
   calAHP(i: any, e: any) {
     // console.log(e);
@@ -256,11 +312,11 @@ export class AhpComponent implements OnInit {
     console.log(this.eigen_a);
 
     this.eigenVector = [
-      { name: 'a', value: this.eigen_a },
-      { name: 'b', value: this.eigen_b },
-      { name: 'c', value: this.eigen_c },
-      { name: 'd', value: this.eigen_d },
-      { name: 'e', value: this.eigen_e }
+      { name: this.fac_a, value: this.eigen_a },
+      { name: this.fac_b, value: this.eigen_b },
+      { name: this.fac_c, value: this.eigen_c },
+      { name: this.fac_d, value: this.eigen_d },
+      { name: this.fac_e, value: this.eigen_e }
     ];
     this.consistCal();
   }
