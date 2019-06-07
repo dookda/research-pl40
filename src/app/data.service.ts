@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +8,8 @@ export class DataService {
 
 
   public dat: any;
-  public url = 'http://localhost:3000/pro40';
-  public uri = 'http://localhost:3000';
+  public url = 'http://cgi.uru.ac.th:3000/pro40';
+  public uri = 'http://cgi.uru.ac.th:3000';
 
   constructor(
     public http: HttpClient
@@ -86,13 +86,32 @@ export class DataService {
   }
 
   getTMD() {
+
+    // tslint:disable-next-line: max-line-length
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjhlOWIxZTkwMjU4OGMyMzlhZWFhMzBjYzRmMTA3MWNlNWYzNzBkNWQ3NjdkMzRmMDQ2OGZmNDM5MzM1YWQyZTFmZjI4NWM5NjQzYmQyNTRhIn0.eyJhdWQiOiIyIiwianRpIjoiOGU5YjFlOTAyNTg4YzIzOWFlYWEzMGNjNGYxMDcxY2U1ZjM3MGQ1ZDc2N2QzNGYwNDY4ZmY0MzkzMzVhZDJlMWZmMjg1Yzk2NDNiZDI1NGEiLCJpYXQiOjE1NTkzODgyMzcsIm5iZiI6MTU1OTM4ODIzNywiZXhwIjoxNTkxMDEwNjM3LCJzdWIiOiI0NDQiLCJzY29wZXMiOltdfQ.ad6ThHz82lsyazL_T9ZdHaZMVtNQwZQVHII9Zx0aO07y0cursmCB8UOrGUEQY-DTxUgIsshC5On2QW84YVZ4xDsA7r-wgah7CNIjb-1p8aYPkEMxZ12UHe4w7dh9jYxqRT6I44w5VBQRIgSx0-2RqaP-IZ1XBWRl3ocvhIzzQmJ-hfJNrflLKS5JP6ppxd5gPUbsNi1c6yZNkMN7ArSsfNldSlMVeFdwgiTTY1lHGusLXg1Ew1IMBl3JO2XRZTQmJSlqjqjmBbBHFw7Rv8kOKCBsZpWZoGVrScXCiRutuOLGLkOlGdI3sLg2od0g1Pr9pG5RC-iITC0OC9phR8Jb1RXLenPQuzGMam2srxa-OLpumS2Mnq4R4Xq6-2f1xYOCMBRRPm4nZW3MJx6QrW8UeOatcN4vjiNtOSU5He5G2FXAmFWhWBbhYXfy1Zu5aZfoGlQueYNCQ4ZKXsWzBHOL3jT4aDagwbundx2qoHMRt667cUcN7O89wZ2QfuIElXjhBSaWikAr9twKjrv0fpdzRHH3cBxQlSp2QqfCrnl_CvpxnN3cDcIwSGBtj5WVQ_qZNzC-cvSxRgfpwwV5K46jIfJ3rUpLtf4EiyzyRBg-rSTOdZb9nVnZptVPcffAiYnSZUODq3NKGCBYM0BCt7Yb1WEJBcO9NkoQFmAS_6GjpoQ';
+    // let headers = new HttpHeaders();
+    // headers = headers.append('Authorization', token);
+    // headers = headers.append('Accept', 'application/json');
+    // headers = headers.append('Content-Type', 'application/json');
+    // headers = headers.append('Access-Control-Allow-Headers', 'Content-Type');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token,
+        'Access-Control-Allow-Headers': '*'
+      })
+    };
+
+
+
     return new Promise((resolve: any, reject: any) => {
-      this.http.get('https://cors.io/?https://data.tmd.go.th/api/Weather3Hours/V1/?type=json').subscribe((res: any) => {
+      this.http.get('https://data.tmd.go.th/nwpapi/v1/forecast/location/hourly', httpOptions).subscribe((res: any) => {
         resolve(res);
       }, (err: any) => {
         reject(err)
-      })
-    })
+      });
+    });
   }
 
   getViirs() {
@@ -127,7 +146,7 @@ export class DataService {
   }
 
   getStat(data: any) {
-    const url = 'http://127.0.0.1:5000/api/ind_ttest';
+    const url = 'http://cgi.uru.ac.th:5000/api/ind_ttest';
     return new Promise((resolve: any, reject: any) => {
       this.http.post(url, data).subscribe((res: any) => {
         resolve(res);

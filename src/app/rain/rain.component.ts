@@ -45,9 +45,10 @@ export class RainComponent implements OnInit {
     // this.getRainTmd();
 
     this.dataService.getTMD().then(async (res: any) => {
-      this.meteo = await res.Stations;
-      console.log(this.meteo);
-      await this.getRainfall();
+      console.log(res);
+      // this.meteo = await res.Stations;
+      // console.log(this.meteo);
+      // await this.getRainfall();
     });
   }
 
@@ -236,7 +237,7 @@ export class RainComponent implements OnInit {
 
   async  getTemperature() {
     await this.map.eachLayer((lyr: any) => {
-      if (lyr.options.iconName == 'da') {
+      if (lyr.options.iconName === 'da') {
         this.marker.remove(lyr);
       }
     });
@@ -642,7 +643,7 @@ export class RainComponent implements OnInit {
   }
 
   typeSelect(n: any) {
-    console.log(n)
+    console.log(n);
     if (n === 'Rainfall') {
       this.getRainfall();
     } else if (n === 'Temperature') {
