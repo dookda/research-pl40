@@ -27,7 +27,7 @@
     "echarts": "^4.1.0",
     "highcharts": "^7.0.2",
     "highcharts-regression": "^2.0.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "leaflet": "^1.4.0",
     "popper.js": "^1.14.6",
     "rxjs": "~6.3.3",
